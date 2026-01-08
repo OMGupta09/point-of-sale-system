@@ -26,27 +26,28 @@ public class UserServiceImpl implements UserService {
         if(user == null) {
             throw new UserException("Invalid Token");
         }
-        return null;
+        return user;
     }
 
     @Override
     public User getCurrentUser() throws UserException {
         String email= SecurityContextHolder.getContext().getAuthentication().getName();
         User user= userRepository.findByEmail(email);
-        if(user == null) {
-            throw new UserException("User Not Found!");
-        }
-        return null;
+        if(user == null) throw new UserException("User Not Found!");
+        return user;
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return null;
+    public User getUserByEmail(String email) throws UserException {
+        User user=userRepository.findByEmail(email);
+        if(user == null) throw new UserException("User Not Found!");
+        return user;
     }
 
     @Override
     public User getUserById(long Id) {
-        return null;
+
+        return userRepository.findById(Id).orElse(null);
     }
 
     @Override
